@@ -1,7 +1,8 @@
-var express = require("express");
-var app = express();
+require('babel-register');
 
-app.get('/', function (req, res) {
+const app = require('./src/app').app;
+
+app.get('/api/whoami', function (req, res) {
   res.send('Hello World!');
 });
 
