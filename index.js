@@ -1,11 +1,19 @@
-require('babel-register');
+var express = require("express");
+var app = express();
 
-const app = require('./src/app').app;
-
-app.get('/api/whoami', function (req, res) {
-  res.send('Hello World!');
+app.get("/", function (req, res) {
+    
+    var ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
+    var lang = req.headers["accept-language"].split(",")[0];
+    var os = req.headers["user-agent"].match(/\((.*?)\)/)[1]
+    
+    res.json({
+        ipaddress: ip,
+        language: lang,
+        software: os
+  });                                                
 });
 
 app.listen(8080, function () {
-  console.log('Example app listening on port 8080!');
+  console.log("App listening on port 8080!");
 });
